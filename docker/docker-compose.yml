@@ -1,0 +1,45 @@
+version: "3.8"
+services:
+  postgres_agent:
+    image: postgres:latest
+    env_file:
+      - .env
+    networks:
+      - main_agent
+    # restart: unless-stopped
+    ports:
+      - "5443:5432"
+    command: -p 5443
+
+  app_agent:
+    env_file:
+      - .env
+    environment:
+      - SERVICE_NAME=app_agent
+    # restart: unless-stopped
+    depends_on:
+      - postgres_agent
+      - redis_agent
+    working_dir: /srv/app_agent
+    networks:
+      - main_agent
+
+  celery_agent:
+    restart: unless-stopped
+    command: celery -A agent worker -B -l info
+    env_file:
+      - .env
+    depends_on:
+      - app_agent
+      - redis_agent
+    networks:
+      - main_agent
+
+  redis_agent:
+    restart: unless-stopped
+    image: redis:7-alpine
+    networks:
+      - main_agent
+
+networks:
+  main_agent:

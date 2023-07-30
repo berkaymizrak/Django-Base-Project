@@ -1,0 +1,38 @@
+version: "3.8"
+services:
+  postgres_agent:
+    container_name: postgres_agent_dev
+    hostname: postgres_agent_dev
+    volumes:
+      - "postgresql-data-agent-dev:/var/lib/postgresql/data"
+
+  app_agent:
+    container_name: app_agent_dev
+    hostname: app_agent_dev
+    build:
+      context: ./..
+      args:
+        REPO_PATH: .
+      dockerfile: docker/dev.Dockerfile
+    volumes:
+      - ./..:/srv/app_agent
+      - static-data-agent-dev:/srv/public
+    ports:
+      - "0.0.0.0:8011:8011"
+    command: python manage.py runserver 0.0.0.0:8011
+
+  celery_agent:
+    build:
+      context: ./..
+      dockerfile: docker/dev.Dockerfile
+    volumes:
+      - celery-data-agent-dev:/srv/public
+
+  redis_agent:
+    container_name: redis_agent_dev
+    hostname: redis_agent_dev
+
+volumes:
+  postgresql-data-agent-dev:
+  static-data-agent-dev:
+  celery-data-agent-dev:

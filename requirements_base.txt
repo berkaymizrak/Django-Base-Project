@@ -1,0 +1,9 @@
+# Django/UI
+Django
+django-environ
+psycopg2
+
+# Celery
+redis
+celery
+django-celery-beat

@@ -1,0 +1,46 @@
+version: "3.8"
+services:
+  postgres_agent:
+    container_name: postgres_agent_prod
+    hostname: postgres_agent_prod
+    volumes:
+      - "postgresql-data-agent-prod:/var/lib/postgresql/data"
+
+  app_agent:
+    container_name: app_agent_prod
+    hostname: app_agent_prod
+    build:
+      context: ./..
+      args:
+        REPO_PATH: .
+      dockerfile: docker/prod.Dockerfile
+    volumes:
+      - static-data-agent-prod:/srv/public
+    expose:
+      - 8011
+    command: gunicorn agent.wsgi:application --bind 0.0.0.0:8011
+    networks:
+      - main_agent
+      - bridge_network
+
+  celery_agent:
+    build:
+      context: ./..
+      dockerfile: prod.Dockerfile
+    volumes:
+      - celery-data-agent-prod:/srv/public
+
+  redis_agent:
+    container_name: redis_agent_prod
+    hostname: redis_agent_prod
+
+networks:
+  main_agent:
+  bridge_network:
+    name: nginx_network
+    driver: bridge
+
+volumes:
+  postgresql-data-agent-prod:
+  static-data-agent-prod:
+  celery-data-agent-prod:
