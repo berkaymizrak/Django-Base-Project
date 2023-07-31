@@ -1,7 +1,10 @@
 # Django/UI
 Django
 django-environ
+
+# Devops
 psycopg2
+gunicorn
 
 # Celery
 redis
