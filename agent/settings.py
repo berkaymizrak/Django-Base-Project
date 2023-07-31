@@ -48,6 +48,9 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
 
     'django_celery_beat',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -199,14 +202,20 @@ USER_AGENTS_CACHE = None
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 100,
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.OrderingFilter',
+    ],
     'DEFAULT_PERMISSION_CLASSES': (
+        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
         'rest_framework.permissions.IsAuthenticated',
         # 'rest_framework.permissions.IsAuthenticatedOrReadOnly',
         # 'rest_framework.permissions.IsAdminUser',
-        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ),
-    # 'DEFAULT_AUTHENTICATION_CLASSES': [
-    #     'rest_framework.authentication.TokenAuthentication',
-    # ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
 }
 # ---------------------------- REST_FRAMEWORK ----------------------------

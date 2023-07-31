@@ -7,3 +7,8 @@ psycopg2
 redis
 celery
 django-celery-beat
+
+# Django REST Framework
+djangorestframework
+django-filter
+markdown
