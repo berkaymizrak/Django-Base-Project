@@ -12,6 +12,7 @@ Django==4.2.3
 django-celery-beat==2.5.0
 django-environ==0.10.0
 django-filter==23.2
+django-smtp-ssl==1.0
 django-timezone-field==5.1
 djangorestframework==3.14.0
 gunicorn==21.2.0

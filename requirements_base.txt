@@ -5,6 +5,7 @@ django-environ
 # Devops
 psycopg2
 gunicorn
+django_smtp_ssl
 
 # Celery
 redis
