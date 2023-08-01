@@ -15,7 +15,7 @@ services:
         REPO_PATH: .
       dockerfile: docker/prod.Dockerfile
     volumes:
-      - static-data-agent-prod:/srv/public
+      - static-data-agent-prod:/srv/app_agent/static
     expose:
       - 8011
     command: gunicorn agent.wsgi:application --bind 0.0.0.0:8011
@@ -28,7 +28,7 @@ services:
       context: ./..
       dockerfile: docker/prod.Dockerfile
     volumes:
-      - celery-data-agent-prod:/srv/public
+      - celery-data-agent-prod:/srv/app_agent/static
 
   redis_agent:
     container_name: redis_agent_prod

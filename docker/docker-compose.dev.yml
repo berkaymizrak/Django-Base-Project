@@ -16,7 +16,7 @@ services:
       dockerfile: docker/dev.Dockerfile
     volumes:
       - ./..:/srv/app_agent
-      - static-data-agent-dev:/srv/public
+      - static-data-agent-dev:/srv/app_agent/static
     ports:
       - "0.0.0.0:8011:8011"
     command: python manage.py runserver 0.0.0.0:8011
@@ -26,7 +26,7 @@ services:
       context: ./..
       dockerfile: docker/dev.Dockerfile
     volumes:
-      - celery-data-agent-dev:/srv/public
+      - celery-data-agent-dev:/srv/app_agent/static
 
   redis_agent:
     container_name: redis_agent_dev
