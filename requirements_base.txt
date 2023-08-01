@@ -7,6 +7,12 @@ psycopg2
 gunicorn
 django_smtp_ssl
 
+## Storage
+whitenoise
+# OR
+django-storages
+boto3
+
 # Celery
 redis
 celery
