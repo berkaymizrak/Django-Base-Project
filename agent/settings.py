@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',
 
-    'storages',
     'django_celery_beat',
     'rest_framework',
     'rest_framework.authtoken',
@@ -131,33 +130,11 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-MEDIA_LOCATION = 'media'
-if DEBUG:
-    STATIC_URL = '/static/'
-    STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
-else:
-    AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
-    AWS_S3_REGION_NAME = 'eu-central-1'
-    AWS_DEFAULT_ACL = 'public-read'
-    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-    AWS_S3_OBJECT_PARAMETERS = {
-        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
-        'CacheControl': 'max-age=94608000',
-    }
-
-    AWS_LOCATION = 'static'
-    STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
-    STATIC_ROOT = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
-
-    DEFAULT_FILE_STORAGE = 'agent.custom_storages.MediaStorage'
-    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
